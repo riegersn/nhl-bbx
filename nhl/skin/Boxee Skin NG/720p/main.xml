@@ -1,0 +1,321 @@
+<?xml version="1.0"?>
+<window type="window" id="14000">
+   <defaultcontrol always="true">200</defaultcontrol>
+   <allowoverlay>no</allowoverlay>
+   <onload>SetFocus(200)</onload>
+   <onload lang="python">
+<![CDATA[
+
+myTracker.trackView("News")
+#nhl.loadNewsItems()
+
+]]>
+</onload>
+   <controls>
+      <include>Window_Fade_Animation</include>
+      <control type="image">
+         <width>1280</width>
+         <height>720</height>
+         <texture>NHL_DefaultBG.png</texture>
+         <aspectratio>scale</aspectratio>
+      </control>
+      <control type="image">
+         <posx>423</posx>
+         <posy>114</posy>
+         <width>434</width>
+         <height>492</height>
+         <texture>NHL_DefaultBGLogo.png</texture>
+         <aspectratio>keep</aspectratio>
+      </control>
+      <control type="image">
+         <width>1280</width>
+         <height>120</height>
+         <texture>NHL_Banner.png</texture>
+      </control>
+      <control type="image">
+         <width>176</width>
+         <height>95</height>
+         <texture>NHL_LogoBanner.png</texture>
+         <aspectratio>keep</aspectratio>
+      </control>
+      <control type="label">
+         <posx>1230</posx>
+         <posy>7</posy>
+         <width>600</width>
+         <height>30</height>
+         <align>right</align>
+         <aligny>center</aligny>
+         <font>font30</font>
+         <textcolor>white</textcolor>
+         <label>Welcome $INFO[App.String(auth_name)]!</label>
+         <visible>!IsEmpty(App.String(auth_name))</visible>
+      </control>
+      <control type="group" id="100">
+         <control type="button" id="101">
+            <onright>102</onright>
+            <posy>5</posy>
+            <posx>392</posx>
+            <width>496</width>
+            <height>35</height>
+            <ondown>200</ondown>
+            <texturefocus>NHL_NowPlayingOn.png</texturefocus>
+            <texturenofocus>NHL_NowPlayingOff.png</texturenofocus>
+            <visible>Player.HasVideo</visible>
+            <onclick>SetFocus(101)</onclick>
+            <onclick>ActivateWindow(FullscreenVideo)</onclick>
+         </control>
+         <control type="button" id="102">
+            <onleft>101</onleft>
+            <posy>12</posy>
+            <posx>1246</posx>
+            <width>25</width>
+            <height>25</height>
+            <ondown>200</ondown>
+            <texturefocus>NHL_SettingsOn.png</texturefocus>
+            <texturenofocus>NHL_SettingsOff.png</texturenofocus>
+            <onclick>ActivateWindow(14004)</onclick>
+         </control>
+      </control>
+      <control type="group">
+         <posy>4</posy>
+         <posx>435</posx>
+         <control type="label">
+            <width>440</width>
+            <height>35</height>
+            <font>font23</font>
+            <align>left</align>
+            <aligny>center</aligny>
+            <scroll>true</scroll>
+            <textcolor>white</textcolor>
+            <label>Now Playing: $INFO[VideoPlayer.Title]</label>
+            <visible>Player.HasVideo + !Control.HasFocus(101)</visible>
+         </control>
+         <control type="label">
+            <width>440</width>
+            <height>35</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <font>font23</font>
+            <textcolor>black</textcolor>
+            <label>Now Playing: $INFO[VideoPlayer.Title]</label>
+            <scroll>true</scroll>
+            <visible>Player.HasVideo + Control.HasFocus(101)</visible>
+         </control>
+      </control>
+      
+      
+      <!--
+         NHL NEWS SECTION
+      -->
+      <control type="group">
+         <posy>46</posy>
+         <posx>850</posx>
+         <control type="grouplist" id="200">
+            <onup>100</onup>
+            <ondown>301</ondown>
+            <onleft>-</onleft>
+            <onright>-</onright>
+            <itemgap>13</itemgap>
+            <orientation>horizontal</orientation>
+            <control type="button" id="201">
+               <width>98</width>
+               <height>49</height>
+               <texturefocus>NHL_NewsOn.png</texturefocus>
+               <texturenofocus>NHL_NewsOnAlt.png</texturenofocus>
+               <!--<onclick>ActivateWindow(1400)</onclick>-->
+            </control>
+            <control type="button" id="202">
+               <width>114</width>
+               <height>49</height>
+               <texturefocus>NHL_GamesOn.png</texturefocus>
+               <texturenofocus>NHL_GamesOff.png</texturenofocus>
+               <onclick>ActivateWindow(14001)</onclick>
+            </control>
+            <!--<control type="button" id="203">-->
+            <!--   <width>170</width>-->
+            <!--   <height>52</height>-->
+            <!--   <texturefocus>NHL_ScheduleOn.png</texturefocus>-->
+            <!--   <texturenofocus>NHL_ScheduleOff.png</texturenofocus>-->
+            <!--   <onclick>ActivateWindow(14002)</onclick>-->
+            <!--</control>-->
+            <control type="button" id="204">
+               <width>184</width>
+               <height>49</height>
+               <texturefocus>NHL_StandingsOn.png</texturefocus>
+               <texturenofocus>NHL_StandingsOff.png</texturenofocus>
+               <onclick>ActivateWindow(14003)</onclick>
+            </control>
+         </control>
+      </control>
+      
+      <!--
+         NHL NEWS SECTION
+      -->
+      <control type="group" id="300">
+         <control type="panel" id="301">
+            <posx>18</posx>
+            <posy>111</posy>
+            <onup>200</onup>
+            <onleft>201</onleft>
+            <onright>204</onright>
+            <width>1280</width>
+            <height>605</height>
+            <pagecontrol></pagecontrol>
+            <scrolltime>200</scrolltime>
+            <preloaditems>2</preloaditems>
+            <orientation>vertical</orientation>
+            <itemlayout width="632" height="202">
+               <control type="image">
+                  <width>617</width>
+                  <height>201</height>
+                  <texture>NHL_NewsWindowCollapsedUnfocused.png</texture>
+               </control>
+               <control type="label">
+                  <posx>16</posx>
+                  <posy>12</posy>
+                  <width>568</width>
+                  <height>16</height>
+                  <align>left</align>
+                  <font>font16b</font>
+                  <textcolor>black</textcolor>
+                  <info>ListItem.property(custom:date)</info>
+               </control>
+               <control type="label">
+                  <posx>16</posx>
+                  <posy>30</posy>
+                  <width>568</width>
+                  <height>24</height>
+                  <align>left</align>
+                  <font>font23b</font>
+                  <textcolor>black</textcolor>
+                  <info>ListItem.Label</info>
+               </control>
+               <control type="image">
+                  <posx>14</posx>
+                  <posy>66</posy>
+                  <width>160</width>
+                  <height>91</height>
+                  <info>Listitem.Thumb</info>
+                  <aspectratio>scale</aspectratio>
+                  <bordersize>2</bordersize>
+                  <bordertexture>white.png</bordertexture>
+               </control>
+               <control type="label">
+                  <posx>191</posx>
+                  <posy>65</posy>
+                  <width>396</width>
+                  <height>110</height>
+                  <align>left</align>
+                  <!--<aligny>center</aligny>-->
+                  <font>font19</font>
+                  <textcolor>black</textcolor>
+                  <info>ListItem.property(description)</info>
+                  <wrapmultiline>true</wrapmultiline>
+                  <visible>!IsEmpty(Listitem.Thumb)</visible>
+               </control>
+               <control type="label">
+                  <posx>16</posx>
+                  <posy>65</posy>
+                  <width>568</width>
+                  <height>110</height>
+                  <align>left</align>
+                  <!--<aligny>center</aligny>-->
+                  <font>font19</font>
+                  <textcolor>black</textcolor>
+                  <info>ListItem.property(description)</info>
+                  <wrapmultiline>true</wrapmultiline>
+                  <visible>IsEmpty(Listitem.Thumb)</visible>
+               </control>
+            </itemlayout>
+            <focusedlayout width="632" height="202">
+               <control type="image">
+                  <width>617</width>
+                  <height>201</height>
+                  <texture>NHL_NewsWindowCollapsedFocused.png</texture>
+               </control>
+               <control type="label">
+                  <posx>16</posx>
+                  <posy>12</posy>
+                  <width>568</width>
+                  <height>16</height>
+                  <align>left</align>
+                  <font>font16b</font>
+                  <textcolor>black</textcolor>
+                  <info>ListItem.property(custom:date)</info>
+               </control>
+               <control type="label">
+                  <posx>16</posx>
+                  <posy>30</posy>
+                  <width>568</width>
+                  <height>24</height>
+                  <align>left</align>
+                  <font>font23b</font>
+                  <textcolor>black</textcolor>
+                  <info>ListItem.Label</info>
+               </control>
+               <control type="image">
+                  <posx>14</posx>
+                  <posy>66</posy>
+                  <width>160</width>
+                  <height>91</height>
+                  <info>Listitem.Thumb</info>
+                  <aspectratio>scale</aspectratio>
+                  <bordersize>2</bordersize>
+                  <bordertexture>white.png</bordertexture>
+               </control>
+               <control type="label">
+                  <posx>191</posx>
+                  <posy>65</posy>
+                  <width>396</width>
+                  <height>110</height>
+                  <align>left</align>
+                  <!--<aligny>center</aligny>-->
+                  <font>font19</font>
+                  <textcolor>black</textcolor>
+                  <info>ListItem.property(description)</info>
+                  <wrapmultiline>true</wrapmultiline>
+                  <visible>!IsEmpty(Listitem.Thumb)</visible>
+               </control>
+               <control type="label">
+                  <posx>16</posx>
+                  <posy>65</posy>
+                  <width>568</width>
+                  <height>110</height>
+                  <align>left</align>
+                  <!--<aligny>center</aligny>-->
+                  <font>font19</font>
+                  <textcolor>black</textcolor>
+                  <info>ListItem.property(description)</info>
+                  <wrapmultiline>true</wrapmultiline>
+                  <visible>IsEmpty(Listitem.Thumb)</visible>
+               </control>
+               <control type="label">
+                  <posx>490</posx>
+                  <posy>165</posy>
+                  <width>140</width>
+                  <height>24</height>
+                  <align>left</align>
+                  <font>font21</font>
+                  <textcolor>black</textcolor>
+                  <label>Read More</label>
+               </control>
+            </focusedlayout>
+            <content type="url" url="rss://dir.boxee.tv/apps/nhl/nhl.php?news">
+               <onclick>ActivateWindow(14005)</onclick>
+            </content>
+         </control>
+      </control>
+      <!--<control type="label">-->
+      <!--   <posy>680</posy>-->
+      <!--   <posx>190</posx>-->
+      <!--   <width>890</width>-->
+      <!--   <height>40</height>-->
+      <!--   <align>center</align>-->
+      <!--   <aligny>center</aligny>-->
+      <!--   <font>font14</font>-->
+      <!--   <textcolor>99000000</textcolor>-->
+      <!--   <wrapmultiline>true</wrapmultiline>-->
+      <!--   <label>All NHL logos and marks and NHL team logos and marks depicted herein are the property of the NHL and the respective teams and may not be reproduced without the prior written consent of NHL Enterprises, L.P. &#169; NHL 2010. All Rights Reserved.</label>-->
+      <!--</control>-->
+   </controls>
+</window>

@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<window type="dialog" id="14004">
+   <defaultcontrol always="true">120</defaultcontrol>
+   <allowoverlay>no</allowoverlay>
+   <onload lang="python">
+      <![CDATA[
+myTracker.trackView("Settings")
+]]>
+</onload>
+<controls>
+   <control type="group">
+      <animation type="WindowClose">
+         <effect type="fade" start="100" end="0" time="120" />
+         <effect type="zoom" start="100" end="300" center="auto" time="120" />
+      </animation>
+      <animation type="WindowOpen">
+         <effect type="fade" start="0" end="100" time="120" />
+         <effect type="zoom" start="300" end="100" center="auto" time="120" />
+      </animation>
+      <control type="image">
+         <width>1280</width>
+         <height>720</height>
+         <texture>NHL_ScreenDim2.png</texture>
+      </control>
+      <control type="group">
+         <posx>431</posx>
+         <posy>240</posy>
+         <control type="image">
+            <width>417</width>
+            <height>260</height>
+            <texture>NHL_SettingsDialogWindow.png</texture>
+         </control>
+         
+         <!--Hide Scores-->
+         <control type="button" id="120">
+            <posy>30</posy>
+            <posx>30</posx>
+            <width>161</width>
+            <height>22</height>
+            <texturefocus>NHL_HideScoresOn.png</texturefocus>
+            <texturenofocus>NHL_HideScoresOff.png</texturenofocus>
+            <hitrect x="38" y="30" w="340" h="22"/>
+            <onclick lang="python">
+<![CDATA[
+if nhl.config.GetValue('hidescores'):
+   nhl.config.Reset('hidescores')
+   myTracker.trackEvent("Button", "Click", 'ScoresOn')
+else:
+   nhl.config.SetValue('hidescores', 'true')
+   myTracker.trackEvent("Button", "Click", 'ScoresOff')
+]]>
+            </onclick>
+         </control>
+         <control type="image">
+            <posy>25</posy>
+            <posx>340</posx>
+            <width>28</width>
+            <height>28</height>
+            <texture>NHL_CheckBoxOn.png</texture>
+            <visible>App.HasSetting(hidescores)</visible>
+         </control>
+         <control type="image">
+            <posy>25</posy>
+            <posx>340</posx>
+            <width>28</width>
+            <height>28</height>
+            <texture>NHL_CheckBoxOff.png</texture>
+            <visible>!App.HasSetting(hidescores)</visible>
+         </control>
+         
+         <!--Account Info-->
+         <control type="image">
+            <posy>70</posy>
+            <posx>30</posx>
+            <width>229</width>
+            <height>23</height>
+            <texture>NHL_AccountInfoOn.png</texture>
+            <visible>Control.HasFocus(121)</visible>
+         </control>
+         <control type="image">
+            <posy>70</posy>
+            <posx>30</posx>
+            <width>229</width>
+            <height>23</height>
+            <texture>NHL_AccountInfoOff.png</texture>
+            <visible>!Control.HasFocus(121)</visible>
+         </control>
+         <control type="grouplist" id="121">
+            <posx>30</posx>
+            <posy>105</posy>
+            <itemgap>7</itemgap>
+            <orientation>vertical</orientation>
+            <control type="edit" id="122">
+               <width>352</width>
+               <height>35</height>
+               <onnext>123</onnext>
+               <onprev>120</onprev>
+               <textoffsetx>8</textoffsetx>
+               <align>left</align>
+               <aligny>center</aligny>
+               <font>font23</font>
+               <textcolor>black</textcolor>
+               <visible>!App.HasSetting(auth_user)</visible>
+               <texturefocus>NHL_SettingsTextFieldOn.png</texturefocus>
+               <texturenofocus>NHL_SettingsTextField.png</texturenofocus>
+            </control>
+            <control type="edit" id="123">
+               <width>352</width>
+               <height>35</height>
+               <onnext>124</onnext>
+               <ondown>SetFocus(124)</ondown>
+               <onprev>122</onprev>
+               <textoffsetx>8</textoffsetx>
+               <align>left</align>
+               <aligny>center</aligny>
+               <font>font23</font>
+               <textcolor>black</textcolor>
+               <password>true</password>
+               <visible>!App.HasSetting(auth_user)</visible>
+               <texturefocus>NHL_SettingsTextFieldOn.png</texturefocus>
+               <texturenofocus>NHL_SettingsTextField.png</texturenofocus>
+            </control>
+            <control type="image">
+               <posx></posx>
+               <posy></posy>
+               <width>20</width>
+               <height>5</height>
+               <texture></texture>
+            </control>
+            <control type="button" id="124">
+               <width>139</width>
+               <height>36</height>
+               <onup>SetFocus(123)</onup>
+               <visible>!App.HasSetting(auth_user)</visible>
+               <texturefocus>NHL_ButtonLoginOn.png</texturefocus>
+               <texturenofocus>NHL_ButtonLoginOff.png</texturenofocus>
+               <onclick lang="python">
+<![CDATA[
+nhl.user.dialogLogin()
+myTracker.trackEvent("Button", "Click", 'Login')
+]]>
+               </onclick>
+            </control>
+            <control type="label">
+               <width>352</width>
+               <height>77</height>
+               <align>left</align>
+               <font>font23b</font>
+               <textcolor>white</textcolor>
+               <visible>App.HasSetting(auth_user)</visible>
+               <label>Logged In:[CR]$INFO[App.String(auth_user)] ($INFO[App.String(auth_name)])</label>
+            </control>
+            <control type="button" id="125">
+               <onup>SetFocus(120)</onup>
+               <width>139</width>
+               <height>36</height>
+               <visible>App.HasSetting(auth_user)</visible>
+               <texturefocus>NHL_ButtonLogoutOn.png</texturefocus>
+               <texturenofocus>NHL_ButtonLogoutOff.png</texturenofocus>
+               <onclick lang="python">
+<![CDATA[
+nhl.user.commitLogout()
+myTracker.trackEvent("Button", "Click", 'Logout')
+]]>
+               </onclick>
+            </control>
+         </control>
+      </control>
+   </control>
+</controls>
+</window>

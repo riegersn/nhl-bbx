@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<window type="window" id="14002">
+   <defaultcontrol always="true">100</defaultcontrol>
+   <allowoverlay>no</allowoverlay>
+   <onload lang="python">
+      <![CDATA[
+#import nhl
+#nhl.populateGames()
+]]>
+</onload>
+   <controls>
+      <include>Window_Fade_Animation</include>
+      <control type="image">
+         <width>1280</width>
+         <height>720</height>
+         <texture>NHL_DefaultBG.png</texture>
+      </control>
+      <control type="image">
+         <width>1280</width>
+         <height>120</height>
+         <texture>NHL_Banner.png</texture>
+      </control>
+      <control type="label">
+         <posx>1230</posx>
+         <posy>7</posy>
+         <width>600</width>
+         <height>30</height>
+         <align>right</align>
+         <aligny>center</aligny>
+         <font>font30</font>
+         <textcolor>white</textcolor>
+         <label>Welcome $INFO[App.String(auth_name)]!</label>
+         <visible>!IsEmpty(App.String(auth_name))</visible>
+      </control>
+      <control type="group" id="100">
+         <control type="button" id="101">
+            <posy>12</posy>
+            <posx>1246</posx>
+            <width>25</width>
+            <height>25</height>
+            <ondown>200</ondown>
+            <texturefocus>NHL_SettingsOn.png</texturefocus>
+            <texturenofocus>NHL_SettingsOff.png</texturenofocus>
+            <onclick>ActivateWindow(14004)</onclick>
+         </control>
+      </control>
+      
+      <!--
+         NHL NEWS SECTION
+      -->
+      <control type="group">
+         <posy>46</posy>
+         <posx>850</posx>
+         <control type="grouplist" id="200">
+            <onup>100</onup>
+            <!--<ondown>220</ondown>-->
+            <itemgap>13</itemgap>
+            <orientation>horizontal</orientation>
+            <control type="button" id="201">
+               <width>98</width>
+               <height>49</height>
+               <texturefocus>NHL_NewsOn.png</texturefocus>
+               <texturenofocus>NHL_NewsOff.png</texturenofocus>
+               <onclick>ActivateWindow(14000)</onclick>
+            </control>
+            <control type="button" id="202">
+               <width>114</width>
+               <height>49</height>
+               <texturefocus>NHL_GamesOn.png</texturefocus>
+               <texturenofocus>NHL_GamesOff.png</texturenofocus>
+               <onclick>ActivateWindow(14001)</onclick>
+            </control>
+            <!--<control type="button" id="203">-->
+            <!--   <width>170</width>-->
+            <!--   <height>52</height>-->
+            <!--   <texturefocus>NHL_ScheduleOn.png</texturefocus>-->
+            <!--   <texturenofocus>NHL_ScheduleOnAlt.png</texturenofocus>-->
+            <!--</control>-->
+            <control type="button" id="204">
+               <width>184</width>
+               <height>49</height>
+               <texturefocus>NHL_StandingsOn.png</texturefocus>
+               <texturenofocus>NHL_StandingsOff.png</texturenofocus>
+               <onclick>ActivateWindow(14003)</onclick>
+            </control>
+         </control>
+      </control>
+      
+      <control type="label">
+         <posy>680</posy>
+         <posx>190</posx>
+         <width>890</width>
+         <height>40</height>
+         <align>center</align>
+         <aligny>center</aligny>
+         <font>font14</font>
+         <textcolor>99000000</textcolor>
+         <wrapmultiline>true</wrapmultiline>
+         <label>All NHL logos and marks and NHL team logos and marks depicted herein are the property of the NHL and the respective teams and may not be reproduced without the prior written consent of NHL Enterprises, L.P. &#169; NHL 2010. All Rights Reserved.</label>
+      </control>
+   </controls>
+</window>

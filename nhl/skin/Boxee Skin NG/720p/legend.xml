@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<window type="dialog" id="14054">
+   <defaultcontrol always="true">120</defaultcontrol>
+   <allowoverlay>no</allowoverlay>
+   <controls>
+      <control type="group">
+         <control type="image">
+            <width>1280</width>
+            <height>720</height>
+            <texture>NHL_ScreenDim2.png</texture>
+         </control>
+         <control type="image">
+            <posy>186</posy>
+            <posx>373</posx>
+            <width>534</width>
+            <height>348</height>
+            <texture>NHL_StandingsLegend.png</texture>
+         </control>
+      </control>
+   </controls>
+</window>

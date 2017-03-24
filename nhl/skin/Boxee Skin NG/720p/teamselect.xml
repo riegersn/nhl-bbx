@@ -1,0 +1,252 @@
+<?xml version="1.0"?>
+<window type="dialog" id="14051">
+   <defaultcontrol always="true">120</defaultcontrol>
+   <allowoverlay>no</allowoverlay>
+   <controls>
+      <control type="group">
+         <control type="group">
+            <posy>199</posy>
+            <posx>15</posx>
+            <control type="image">
+               <width>247</width>
+               <height>475</height>
+               <texture>NHL_MenuExpanded.png</texture>
+            </control>
+            <control type="list" id="120">
+               <posy>8</posy>
+               <posx>10</posx>
+               <width>247</width>
+               <height>448</height>
+               <pagecontrol></pagecontrol>
+               <scrolltime>200</scrolltime>
+               <preloaditems>2</preloaditems>
+               <orientation>vertical</orientation>
+               <itemlayout width="247" height="30">
+                  <control type="label">
+                     <width>230</width>
+                     <height>30</height>
+                     <align>left</align>
+                     <aligny>center</aligny>
+                     <font>font21</font>
+                     <textcolor>black</textcolor>
+                     <info>Listitem.Label</info>
+                  </control>
+               </itemlayout>
+               <focusedlayout width="247" height="30">
+                  <control type="label">
+                     <width>230</width>
+                     <height>30</height>
+                     <align>left</align>
+                     <aligny>center</aligny>
+                     <font>font21</font>
+                     <textcolor>white</textcolor>
+                     <info>Listitem.Label</info>
+                  </control>
+               </focusedlayout>
+               <content type="action">
+                  <onclick lang="python">
+                     <![CDATA[
+import xbmc
+dialog = mc.GetWindow(14051)
+list = dialog.GetList(120)
+item = list.GetItem(list.GetFocusedItem())
+mc.GetActiveWindow().GetButton(1001).SetLabel(item.GetLabel())
+mc.GetApp().GetLocalConfig().SetValue('GameFilterByTeam', item.GetThumbnail())
+myTracker.trackEvent("Button", "Click", item.GetLabel())
+list.SetFocusedItem(0)
+xbmc.executebuiltin('Dialog.Close(14051)')
+nhl.updateGameView()
+]]>
+</onclick>
+                  <item>
+                     <path>-</path>
+                     <thumb></thumb>
+                     <onclick>-</onclick>
+                     <label>All Teams</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>ana</thumb>
+                     <onclick>-</onclick>
+                     <label>Ducks</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>atl</thumb>
+                     <onclick>-</onclick>
+                     <label>Thrashers</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>bos</thumb>
+                     <onclick>-</onclick>
+                     <label>Bruins</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>buf</thumb>
+                     <onclick>-</onclick>
+                     <label>Sabres</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>cgy</thumb>
+                     <onclick>-</onclick>
+                     <label>Flames</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>car</thumb>
+                     <onclick>-</onclick>
+                     <label>Hurricanes</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>chi</thumb>
+                     <onclick>-</onclick>
+                     <label>Blackhawks</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>col</thumb>
+                     <onclick>-</onclick>
+                     <label>Avalanche</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>clb</thumb>
+                     <onclick>-</onclick>
+                     <label>Blue Jackets</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>dal</thumb>
+                     <onclick>-</onclick>
+                     <label>Stars</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>det</thumb>
+                     <onclick>-</onclick>
+                     <label>Red Wings</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>edm</thumb>
+                     <onclick>-</onclick>
+                     <label>Oilers</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>fla</thumb>
+                     <onclick>-</onclick>
+                     <label>Panthers</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>los</thumb>
+                     <onclick>-</onclick>
+                     <label>Kings</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>min</thumb>
+                     <onclick>-</onclick>
+                     <label>Wild</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>mon</thumb>
+                     <onclick>-</onclick>
+                     <label>Canadiens</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>nsh</thumb>
+                     <onclick>-</onclick>
+                     <label>Predators</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>njd</thumb>
+                     <onclick>-</onclick>
+                     <label>Devils</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>nyi</thumb>
+                     <onclick>-</onclick>
+                     <label>Islanders</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>nyr</thumb>
+                     <onclick>-</onclick>
+                     <label>Rangers</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>ott</thumb>
+                     <onclick>-</onclick>
+                     <label>Senators</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>phi</thumb>
+                     <onclick>-</onclick>
+                     <label>Flyers</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>phx</thumb>
+                     <onclick>-</onclick>
+                     <label>Coyotes</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>pit</thumb>
+                     <onclick>-</onclick>
+                     <label>Penguins</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>sjs</thumb>
+                     <onclick>-</onclick>
+                     <label>Sarks</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>stl</thumb>
+                     <onclick>-</onclick>
+                     <label>Blues</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>tbl</thumb>
+                     <onclick>-</onclick>
+                     <label>Lightning</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>tor</thumb>
+                     <onclick>-</onclick>
+                     <label>Maple Leafs</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>van</thumb>
+                     <onclick>-</onclick>
+                     <label>Canucks</label>
+                  </item>
+                  <item>
+                     <path>-</path>
+                     <thumb>wsh</thumb>
+                     <onclick>-</onclick>
+                     <label>Capitals</label>
+                  </item>
+               </content>
+            </control>
+         </control>
+      </control>
+   </controls>
+</window>

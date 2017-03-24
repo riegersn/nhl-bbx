@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<window type="dialog" id="14005">
+   <defaultcontrol always="true">60</defaultcontrol>
+   <allowoverlay>no</allowoverlay>
+   <onload lang="python">
+<![CDATA[
+
+label = nhl.loadNewsDialg()
+myTracker.trackEvent("Button", "Click", label)
+
+]]>
+</onload>
+<controls>
+   <control type="group">
+      <animation type="WindowClose">
+         <effect type="fade" start="100" end="0" time="120" />
+         <effect type="zoom" start="100" end="300" center="auto" time="120" />
+      </animation>
+      <animation type="WindowOpen">
+         <effect type="fade" start="0" end="100" time="120" />
+         <effect type="zoom" start="300" end="100" center="auto" time="120" />
+      </animation>
+      <control type="image">
+         <width>1280</width>
+         <height>720</height>
+         <texture>NHL_ScreenDim.png</texture>
+      </control>
+      <control type="group">
+         <posx>256</posx>
+         <posy>162</posy>
+         <control type="image">
+            <width>811</width>
+            <height>496</height>
+            <texture>NHL_NewsWindowExpandedWhite.png</texture>
+         </control>
+         <control type="button" id="301">
+            <posy>15</posy>
+            <posx>750</posx>
+            <width>33</width>
+            <height>34</height>
+            <onup>-</onup>
+            <ondown>60</ondown>
+            <onright>-</onright>
+            <onleft>-</onleft>
+            <texturefocus>NHL_CloseOn.png</texturefocus>
+            <texturenofocus>NHL_CloseOff.png</texturenofocus>
+            <onclick>Dialog.Close(14005)</onclick>
+         </control>
+         <control type="group" id="302">
+            <posx>20</posx>
+            <posy>20</posy>
+            <control type="group">
+               <visible>!IsEmpty(Container(3999).Listitem(0).Thumb)</visible>
+               <control type="image">
+                  <width>160</width>
+                  <height>91</height>
+                  <info>Container(3999).Listitem(0).Thumb</info>
+                  <aspectratio>scale</aspectratio>
+                  <bordersize>2</bordersize>
+                  <bordertexture>white.png</bordertexture>
+               </control>
+               <control type="label">
+                  <posx>180</posx>
+                  <posy>4</posy>
+                  <width>568</width>
+                  <height>16</height>
+                  <align>left</align>
+                  <font>font16b</font>
+                  <textcolor>white</textcolor>
+                  <info>Container(3999).ListItem(0).property(custom:date)</info>
+               </control>
+               <control type="label">
+                  <posx>180</posx>
+                  <posy>25</posy>
+                  <width>570</width>
+                  <height>60</height>
+                  <align>left</align>
+                  <font>font24b</font>
+                  <textcolor>white</textcolor>
+                  <wrapmultiline>true</wrapmultiline>
+                  <label>[UPPERCASE]$INFO[Container(3999).ListItem(0).Label][/UPPERCASE]</label>
+               </control>
+            </control>
+            <control type="group">
+               <visible>IsEmpty(Container(3999).Listitem(0).Thumb)</visible>
+               <control type="label">
+                  <posx>0</posx>
+                  <posy>4</posy>
+                  <width>728</width>
+                  <height>16</height>
+                  <align>left</align>
+                  <font>font16b</font>
+                  <textcolor>white</textcolor>
+                  <info>Container(3999).ListItem(0).property(custom:date)</info>
+               </control>
+               <control type="label">
+                  <posx>0</posx>
+                  <posy>25</posy>
+                  <width>728</width>
+                  <height>60</height>
+                  <align>left</align>
+                  <font>font24b</font>
+                  <textcolor>white</textcolor>
+                  <wrapmultiline>true</wrapmultiline>
+                  <label>[UPPERCASE]$INFO[Container(3999).ListItem(0).Label][/UPPERCASE]</label>
+               </control>
+            </control>
+            <control type="textbox" id="100">
+               <posx>0</posx>
+               <posy>100</posy>
+               <width>750</width>
+               <height>358</height>
+               <font>font21</font>
+               <textcolor>white</textcolor>
+               <pagecontrol>60</pagecontrol>
+               <info>Container(3999).ListItem(0).property(description)</info>
+            </control>
+            <control type="scrollbar" id="60">
+               <onup>301</onup>
+               <ondown>-</ondown>
+               <posx>760</posx>
+               <posy>100</posy>
+               <width>7</width>
+               <height>350</height>
+               <texturesliderbarfocus border="2">NHL_MenuScrollbarHandleFocused.png</texturesliderbarfocus>
+               <!--<texturesliderbarnofocus border="2">NHL_MenuScrollbarHandle.png</texturesliderbarnofocus>-->
+               <!--<textureslidernib border="2">NHL_MenuScrollbarHandle.png</textureslidernib>-->
+               <textureslidernibfocus border="2">NHL_MenuScrollbarHandleFocused.png</textureslidernibfocus>
+               <texturesliderbackground border="2">NHL_MenuScrollbar.png</texturesliderbackground>
+               <orientation>vertical</orientation>
+               <showonepage>true</showonepage>
+            </control>
+         </control>
+      </control>
+   </control>
+   <control type="list" id="3999">
+      <width>1</width>
+      <height>1</height>
+      <orientation>vertical</orientation>
+      <itemlayout width="1" height="1" />
+      <focusedlayout width="1" height="1" />
+      <content type="url" url="" />
+   </control>
+</controls>
+</window>

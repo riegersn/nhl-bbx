@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<window type="dialog" id="14052">
+   <defaultcontrol always="true">120</defaultcontrol>
+   <allowoverlay>no</allowoverlay>
+   <onload lang="python">
+<![CDATA[
+
+list = mc.ListItems()
+for i in nhl.browser.getAvailableSeasons():
+   item = mc.ListItem()
+   item.SetLabel(i[1])
+   item.SetDescription(i[0])
+   list.append(item)
+mc.GetWindow(14052).GetList(120).SetItems(list)
+
+]]>
+   </onload>
+   <controls>
+      <control type="group">
+         <control type="group">
+            <posy>250</posy>
+            <posx>15</posx>
+            <control type="image">
+               <width>247</width>
+               <height>475</height>
+               <texture>NHL_MenuExpanded.png</texture>
+            </control>
+            <control type="list" id="120">
+               <posy>8</posy>
+               <posx>10</posx>
+               <width>247</width>
+               <height>448</height>
+               <pagecontrol></pagecontrol>
+               <scrolltime>200</scrolltime>
+               <preloaditems>2</preloaditems>
+               <orientation>vertical</orientation>
+               <itemlayout width="247" height="30">
+                  <control type="label">
+                     <width>230</width>
+                     <height>30</height>
+                     <align>left</align>
+                     <aligny>center</aligny>
+                     <font>font21</font>
+                     <textcolor>black</textcolor>
+                     <info>Listitem.Label</info>
+                  </control>
+               </itemlayout>
+               <focusedlayout width="247" height="30">
+                  <control type="label">
+                     <width>230</width>
+                     <height>30</height>
+                     <align>left</align>
+                     <aligny>center</aligny>
+                     <font>font21</font>
+                     <textcolor>white</textcolor>
+                     <info>Listitem.Label</info>
+                  </control>
+               </focusedlayout>
+               <content type="action">
+                  <onclick lang="python">
+<![CDATA[
+
+import xbmc
+list = mc.GetWindow(14052).GetList(120)
+item = list.GetItem(list.GetFocusedItem())
+season = int(item.GetDescription())
+nhl.browser.loadCalendar(season)
+myTracker.trackEvent("Button", "Click", item.GetLabel())
+list.SetFocusedItem(0)
+xbmc.executebuiltin('Dialog.Close(14052)')
+nhl.updateGameView()
+
+]]>
+                  </onclick>
+               </content>
+            </control>
+         </control>
+      </control>
+   </controls>
+</window>

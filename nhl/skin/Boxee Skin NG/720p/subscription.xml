@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<window type="dialog" id="14053">
+   <defaultcontrol always="true">120</defaultcontrol>
+   <allowoverlay>no</allowoverlay>
+   <controls>
+      <control type="group">
+         <control type="image">
+            <width>1280</width>
+            <height>720</height>
+            <texture>NHL_ScreenDim2.png</texture>
+         </control>
+         <control type="group">
+            <posy>200</posy>
+            <posx>403</posx>
+            <control type="image">
+               <width>473</width>
+               <height>320</height>
+               <texture>NHL_SubscriptionNotificationWindow.png</texture>
+            </control>
+            <control type="label" id="4000">
+               <posx>25</posx>
+               <posy>35</posy>
+               <align>left</align>
+               <aligny>center</aligny>
+               <font>title24b</font>
+               <textcolor>white</textcolor>
+               <info>App.String(dialog_title)</info>
+            </control>
+            <control type="label" id="4001">
+               <posx>25</posx>
+               <posy>62</posy>
+               <width>413</width>
+               <height>325</height>
+               <align>left</align>
+               <!--<aligny>center</aligny>-->
+               <font>font21</font>
+               <textcolor>white</textcolor>
+               <!--<label></label>-->
+               <info>App.String(dialog_message)</info>
+               <wrapmultiline>true</wrapmultiline>
+            </control>
+            <control type="button" id="120">
+               <posx>25</posx>
+               <posy>260</posy>
+               <width>139</width>
+               <height>36</height>
+               <texturefocus>NHL_ButtonOkOn.png</texturefocus>
+               <texturenofocus>NHL_ButtonOkOff.png</texturenofocus>
+               <onclick>Dialog.Close(14053)</onclick>
+            </control>
+         </control>
+      </control>
+   </controls>
+   <onunload lang="python">
+<![CDATA[
+
+nhl.log('closing dialog')
+nhl.dialog.close()
+
+]]>
+   </onunload>
+</window>

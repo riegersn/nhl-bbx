@@ -1,0 +1,636 @@
+<?xml version="1.0"?>
+<window type="window" id="14003">
+   <defaultcontrol always="true">204</defaultcontrol>
+   <allowoverlay>no</allowoverlay>
+   <onload>SetFocus(204)</onload>
+   <onload>App.Reset(standings_league)</onload>
+   <onload>App.Reset(standings_division)</onload>
+   <onload>App.Reset(standings_western)</onload>
+   <onload>App.SetBool(standings_eastern, true)</onload>
+   <onload>App.SetBool(standings_conference, true)</onload>
+   <onload lang="python">
+      <![CDATA[
+myTracker.trackView("Standings")
+nhl.config.SetValue('StandingsFilter', 'eastern')
+nhl.updateStandingsView()
+]]>
+</onload>
+   <controls>
+      <include>Window_Fade_Animation</include>
+      <control type="image">
+         <width>1280</width>
+         <height>720</height>
+         <texture>NHL_DefaultBG.png</texture>
+         <aspectratio>scale</aspectratio>
+      </control>
+      <control type="image">
+         <posx>423</posx>
+         <posy>114</posy>
+         <width>434</width>
+         <height>492</height>
+         <texture>NHL_DefaultBGLogo.png</texture>
+         <aspectratio>keep</aspectratio>
+      </control>
+      <control type="image">
+         <width>1280</width>
+         <height>720</height>
+         <texture>NHL_ScreenDim2.png</texture>
+      </control>
+      <control type="image">
+         <width>1280</width>
+         <height>120</height>
+         <texture>NHL_Banner.png</texture>
+      </control> 
+      <control type="image">
+         <width>176</width>
+         <height>95</height>
+         <texture>NHL_LogoBanner.png</texture>
+         <aspectratio>keep</aspectratio>
+      </control>
+      <control type="label">
+         <posx>1230</posx>
+         <posy>7</posy>
+         <width>600</width>
+         <height>30</height>
+         <align>right</align>
+         <aligny>center</aligny>
+         <font>font30</font>
+         <textcolor>white</textcolor>
+         <label>Welcome $INFO[App.String(auth_name)]!</label>
+         <visible>!IsEmpty(App.String(auth_name))</visible>
+      </control>
+      <control type="group" id="100">
+         <control type="button" id="101">
+            <onright>102</onright>
+            <posy>5</posy>
+            <posx>392</posx>
+            <width>496</width>
+            <height>35</height>
+            <ondown>200</ondown>
+            <texturefocus>NHL_NowPlayingOn.png</texturefocus>
+            <texturenofocus>NHL_NowPlayingOff.png</texturenofocus>
+            <visible>Player.HasVideo</visible>
+            <onclick>SetFocus(101)</onclick>
+            <onclick>ActivateWindow(FullscreenVideo)</onclick>
+         </control>
+         <control type="button" id="102">
+            <onleft>101</onleft>
+            <posy>12</posy>
+            <posx>1246</posx>
+            <width>25</width>
+            <height>25</height>
+            <ondown>200</ondown>
+            <texturefocus>NHL_SettingsOn.png</texturefocus>
+            <texturenofocus>NHL_SettingsOff.png</texturenofocus>
+            <onclick>ActivateWindow(14004)</onclick>
+         </control>
+      </control>
+      <control type="group">
+         <posy>4</posy>
+         <posx>435</posx>
+         <control type="label">
+            <width>440</width>
+            <height>35</height>
+            <font>font23</font>
+            <align>left</align>
+            <aligny>center</aligny>
+            <scroll>true</scroll>
+            <textcolor>white</textcolor>
+            <label>Now Playing: $INFO[VideoPlayer.Title]</label>
+            <visible>Player.HasVideo + !Control.HasFocus(101)</visible>
+         </control>
+         <control type="label">
+            <width>440</width>
+            <height>35</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <font>font23</font>
+            <textcolor>black</textcolor>
+            <label>Now Playing: $INFO[VideoPlayer.Title]</label>
+            <scroll>true</scroll>
+            <visible>Player.HasVideo + Control.HasFocus(101)</visible>
+         </control>
+      </control>
+      
+      <!--
+         NHL NEWS SECTION
+      -->
+      <control type="group">
+         <posy>46</posy>
+         <posx>850</posx>
+         <control type="grouplist" id="200">
+            <onup>100</onup>
+            <ondown>240</ondown>
+            <itemgap>13</itemgap>
+            <orientation>horizontal</orientation>
+            <control type="button" id="201">
+               <width>98</width>
+               <height>49</height>
+               <texturefocus>NHL_NewsOn.png</texturefocus>
+               <texturenofocus>NHL_NewsOff.png</texturenofocus>
+               <onclick>ActivateWindow(14000)</onclick>
+            </control>
+            <control type="button" id="202">
+               <width>114</width>
+               <height>49</height>
+               <texturefocus>NHL_GamesOn.png</texturefocus>
+               <texturenofocus>NHL_GamesOff.png</texturenofocus>
+               <onclick>ActivateWindow(14001)</onclick>
+            </control>
+            <!--<control type="button" id="203">-->
+            <!--   <width>170</width>-->
+            <!--   <height>52</height>-->
+            <!--   <texturefocus>NHL_ScheduleOn.png</texturefocus>-->
+            <!--   <texturenofocus>NHL_ScheduleOff.png</texturenofocus>-->
+            <!--   <onclick>ActivateWindow(14002)</onclick>-->
+            <!--</control>-->
+            <control type="button" id="204">
+               <width>184</width>
+               <height>49</height>
+               <texturefocus>NHL_StandingsOn.png</texturefocus>
+               <texturenofocus>NHL_StandingsOnAlt.png</texturenofocus>
+            </control>
+         </control>
+         <control type="group">
+            <posx>20</posx>
+            <posy>49</posy>
+            <control type="image">
+               <width>505</width>
+               <height>35</height>
+               <texture>NHL_GamesDropdownBG.png</texture>
+            </control>
+            <control type="grouplist" id="240">
+               <posy>2</posy>
+               <posx>12</posx>
+               <onup>200</onup>
+               <ondown>1003</ondown>
+               <itemgap>13</itemgap>
+               <orientation>horizontal</orientation>
+               <control type="togglebutton" id="241">
+                  <width>83</width>
+                  <height>35</height>
+                  <texturefocus>NHL_DivisionOn.png</texturefocus>
+                  <texturenofocus>NHL_DivisionOff.png</texturenofocus>
+                  <alttexturefocus>NHL_DivisionOn.png</alttexturefocus>
+                  <alttexturenofocus>NHL_DivisionOnAlt.png</alttexturenofocus>
+                  <usealttexture>App.HasSetting(standings_division)</usealttexture>
+                  <onclick>App.Reset(standings_conference)</onclick>
+                  <onclick>App.Reset(standings_league)</onclick>
+                  <onclick>App.Reset(standings_western)</onclick>
+                  <onclick>App.SetBool(standings_division, true)</onclick>
+                  <onclick>App.SetBool(standings_eastern, true)</onclick>
+                  <onclick lang="python">
+<![CDATA[
+myTracker.trackEvent("Button", "Click", 'Division')
+nhl.config.SetValue('StandingsFilter', 'easterndiv')
+nhl.updateStandingsView()                  
+]]>
+                  </onclick>
+               </control>
+               <control type="togglebutton" id="242">
+                  <width>122</width>
+                  <height>35</height>
+                  <texturefocus>NHL_ConferenceOn.png</texturefocus>
+                  <texturenofocus>NHL_ConferenceOff.png</texturenofocus>
+                  <alttexturefocus>NHL_ConferenceOn.png</alttexturefocus>
+                  <alttexturenofocus>NHL_ConferenceOnAlt.png</alttexturenofocus>
+                  <usealttexture>App.HasSetting(standings_conference)</usealttexture>
+                  <onclick>App.Reset(standings_division)</onclick>
+                  <onclick>App.Reset(standings_league)</onclick>
+                  <onclick>App.Reset(standings_western)</onclick>
+                  <onclick>App.SetBool(standings_conference, true)</onclick>
+                  <onclick>App.SetBool(standings_eastern, true)</onclick>
+                  <onclick lang="python">
+<![CDATA[
+myTracker.trackEvent("Button", "Click", 'Conference')
+nhl.config.SetValue('StandingsFilter', 'eastern')
+nhl.updateStandingsView()                  
+]]>
+                  </onclick>
+               </control>
+               <control type="togglebutton" id="243">
+                  <width>69</width>
+                  <height>35</height>
+                  <texturefocus>NHL_LeagueOn.png</texturefocus>
+                  <texturenofocus>NHL_LeagueOff.png</texturenofocus>
+                  <alttexturefocus>NHL_LeagueOn.png</alttexturefocus>
+                  <alttexturenofocus>NHL_LeagueOnAlt.png</alttexturenofocus>
+                  <usealttexture>App.HasSetting(standings_league)</usealttexture>
+                  <onclick>App.Reset(standings_division)</onclick>
+                  <onclick>App.Reset(standings_conference)</onclick>
+                  <onclick>App.Reset(standings_eastern)</onclick>
+                  <onclick>App.Reset(standings_western)</onclick>
+                  <onclick>App.SetBool(standings_league, true)</onclick>
+                  <onclick lang="python">
+<![CDATA[
+myTracker.trackEvent("Button", "Click", 'League')
+nhl.config.SetValue('StandingsFilter', 'league')
+nhl.updateStandingsView()                  
+]]>
+                  </onclick>
+               </control>
+               <control type="button" id="244">
+                  <width>71</width>
+                  <height>35</height>
+                  <texturefocus>NHL_LegendOn.png</texturefocus>
+                  <texturenofocus>NHL_LegendOff.png</texturenofocus>
+                  <onclick>ActivateWindow(14054)</onclick>
+               </control>
+            </control>
+         </control>
+      </control>
+      <control type="group">
+         <posy>280</posy>
+         <control type="image">
+            <posx>1197</posx>
+            <width>83</width>
+            <height>275</height>
+            <texture>NHL_WesternTab.png</texture>
+            <visible>App.HasSetting(standings_eastern)</visible>
+         </control>
+         <control type="image">
+            <posx></posx>
+            <width>83</width>
+            <height>275</height>
+            <texture>NHL_EasternTab.png</texture>
+            <visible>App.HasSetting(standings_western)</visible>
+         </control>
+      </control>
+      <control type="group" id="1000">
+         <posx>94</posx>
+         <posy>154</posy>
+         <control type="image">
+            <width>1099</width>
+            <height>543</height>
+            <texture>NHL_StandingsWindowConference.png</texture>
+            <visible>App.HasSetting(standings_conference) | App.HasSetting(standings_league)</visible>
+         </control>
+         <control type="image">
+            <width>1099</width>
+            <height>543</height>
+            <texture>NHL_StandingsWindowDivisonEast.png</texture>
+            <visible>App.HasSetting(standings_division) + App.HasSetting(standings_eastern)</visible>
+         </control>
+         <control type="image">
+            <width>1099</width>
+            <height>543</height>
+            <texture>NHL_StandingsWindowDivisonWest.png</texture>
+            <visible>App.HasSetting(standings_division) + App.HasSetting(standings_western)</visible>
+         </control>
+         <control type="image">
+            <width>1092</width>
+            <height>25</height>
+            <texture>NHL_StandingsMenuEastern.png</texture>
+            <visible>App.HasSetting(standings_eastern)</visible>
+         </control>
+         <control type="image">
+            <width>1092</width>
+            <height>25</height>
+            <texture>NHL_StandingsMenuWestern.png</texture>
+            <visible>App.HasSetting(standings_western)</visible>
+         </control>
+         <control type="list" id="1003">
+            <posy>71</posy>
+            <onup>240</onup>
+            <!--<ondown>1001</ondown>-->
+            <width>1092</width>
+            <height>455</height>
+            <scrolltime>200</scrolltime>
+            <preloaditems>2</preloaditems>
+            <orientation>vertical</orientation>
+            <onright lang="python">
+<![CDATA[
+nhl.config.Reset('standings_eastern')
+nhl.config.SetValue('standings_western', 'true')
+nhl.config.SetValue('StandingsFilter', 'western')
+if nhl.config.GetValue('standings_division'):
+   nhl.config.SetValue('StandingsFilter', 'westerndiv')
+nhl.updateStandingsView()
+]]>
+            </onright>
+            <onleft lang="python">
+<![CDATA[
+nhl.config.Reset('standings_western')
+nhl.config.SetValue('standings_eastern', 'true')
+nhl.config.SetValue('StandingsFilter', 'eastern')
+if nhl.config.GetValue('standings_division'):
+   nhl.config.SetValue('StandingsFilter', 'easterndiv')
+nhl.updateStandingsView()
+]]>
+            </onleft>
+            <itemlayout width="1092" height="30">
+               <control type="label">
+                  <posx>10</posx>
+                  <width>30</width>
+                  <height>30</height>
+                  <aligny>center</aligny>
+                  <font>font18</font>
+                  <textcolor>dd000000</textcolor>
+                  <label>$INFO[Listitem.property(custom:rank)].</label>
+                  <visible>!IsEmpty(Listitem.property(custom:rank))</visible>
+               </control>
+               <control type="image">
+                  <posx>30</posx>
+                  <posy>5</posy>
+                  <width>60</width>
+                  <height>21</height>
+                  <texture>TeamLogos/$INFO[Listitem.property(custom:thumb)]</texture>
+                  <aspectratio align="center">keep</aspectratio>
+               </control>
+               <control type="label">
+                  <posx>80</posx>
+                  <width>300</width>
+                  <height>30</height>
+                  <aligny>center</aligny>
+                  <font>font18</font>
+                  <textcolor>dd000000</textcolor>
+                  <info>Listitem.Label</info>
+               </control>
+               <control type="group">
+                  <posx>342</posx>
+                  <control type="label">
+                     <width>40</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:gp)</info>
+                  </control>
+                  <control type="label">
+                     <posx>42</posx>
+                     <width>40</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:w)</info>
+                  </control>
+                  <control type="label">
+                     <posx>78</posx>
+                     <width>40</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:l)</info>
+                  </control>
+                  <control type="label">
+                     <posx>110</posx>
+                     <width>40</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:ot)</info>
+                  </control>
+                  <control type="label">
+                     <posx>158</posx>
+                     <width>50</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>ffff1a00</textcolor>
+                     <info>Listitem.property(custom:pts)</info>
+                  </control>
+                  <control type="label">
+                     <posx>214</posx>
+                     <width>50</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:gf)</info>
+                  </control>
+                  <control type="label">
+                     <posx>267</posx>
+                     <width>50</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:ga)</info>
+                  </control>
+                  <control type="label">
+                     <posx>325</posx>
+                     <width>50</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:diff)</info>
+                  </control>
+                  <control type="label">
+                     <posx>410</posx>
+                     <width>80</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:home)</info>
+                  </control>
+                  <control type="label">
+                     <posx>515</posx>
+                     <width>80</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:away)</info>
+                  </control>
+                  <control type="label">
+                     <posx>605</posx>
+                     <width>80</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:l10)</info>
+                  </control>
+                  <control type="label">
+                     <posx>688</posx>
+                     <width>80</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:streak)</info>
+                  </control>
+               </control>
+            </itemlayout>
+            <focusedlayout width="1092" height="30">
+               <control type="image">
+                  <width>1092</width>
+                  <height>30</height>
+                  <!--<texture>NHL_StandingsFocused.png</texture>-->
+                  <texture>white.png</texture>
+                  <visible>Control.HasFocus(1003)</visible>
+               </control>
+               <control type="label">
+                  <posx>10</posx>
+                  <width>30</width>
+                  <height>30</height>
+                  <aligny>center</aligny>
+                  <font>font18</font>
+                  <textcolor>dd000000</textcolor>
+                  <label>$INFO[Listitem.property(custom:rank)].</label>
+                  <visible>!IsEmpty(Listitem.property(custom:rank))</visible>
+               </control>
+               <control type="image">
+                  <posx>30</posx>
+                  <posy>5</posy>
+                  <width>60</width>
+                  <height>21</height>
+                  <texture>TeamLogos/$INFO[Listitem.property(custom:thumb)]</texture>
+                  <aspectratio align="center">keep</aspectratio>
+               </control>
+               <control type="label">
+                  <posx>80</posx>
+                  <width>300</width>
+                  <height>30</height>
+                  <aligny>center</aligny>
+                  <font>font18</font>
+                  <textcolor>dd000000</textcolor>
+                  <info>Listitem.Label</info>
+               </control>
+               <control type="group">
+                  <posx>342</posx>
+                  <control type="label">
+                     <width>40</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:gp)</info>
+                  </control>
+                  <control type="label">
+                     <posx>42</posx>
+                     <width>40</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:w)</info>
+                  </control>
+                  <control type="label">
+                     <posx>78</posx>
+                     <width>40</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:l)</info>
+                  </control>
+                  <control type="label">
+                     <posx>110</posx>
+                     <width>40</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:ot)</info>
+                  </control>
+                  <control type="label">
+                     <posx>158</posx>
+                     <width>50</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>ffff1a00</textcolor>
+                     <info>Listitem.property(custom:pts)</info>
+                  </control>
+                  <control type="label">
+                     <posx>214</posx>
+                     <width>50</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:gf)</info>
+                  </control>
+                  <control type="label">
+                     <posx>267</posx>
+                     <width>50</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:ga)</info>
+                  </control>
+                  <control type="label">
+                     <posx>325</posx>
+                     <width>50</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:diff)</info>
+                  </control>
+                  <control type="label">
+                     <posx>410</posx>
+                     <width>80</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:home)</info>
+                  </control>
+                  <control type="label">
+                     <posx>515</posx>
+                     <width>80</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:away)</info>
+                  </control>
+                  <control type="label">
+                     <posx>605</posx>
+                     <width>80</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:l10)</info>
+                  </control>
+                  <control type="label">
+                     <posx>688</posx>
+                     <width>80</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font18</font>
+                     <textcolor>dd000000</textcolor>
+                     <info>Listitem.property(custom:streak)</info>
+                  </control>
+               </control>
+            </focusedlayout>
+            <content type="action">
+               <onclick lang="python"><![CDATA[]]></onclick>
+            </content>
+         </control>
+      </control>
+   </controls>
+</window>

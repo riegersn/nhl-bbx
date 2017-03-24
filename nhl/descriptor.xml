@@ -1,0 +1,15 @@
+<app>
+  <id>nhl</id>
+  <name>NHL GameCenter</name>
+  <version>1.68</version>
+  <description>With NHL GameCenter, you can watch up to 40 action-packed out-of-market games a week live from your computer, including select games from the Stanley Cup Playoffs. Also enjoy access to the NHL Vault and watch games from past seasons.</description>
+  <thumb>http://dir.boxee.tv/apps/nhl/thumb.png</thumb>
+  <repository>http://dir.boxee.tv/apps</repository>
+  <media>video</media>
+  <copyright>Boxee</copyright>
+  <email>support@boxee.tv</email>
+  <type>skin</type>
+  <startWindow>start</startWindow>
+  <platform>all</platform>
+  <minversion>0.9.21</minversion>
+</app>

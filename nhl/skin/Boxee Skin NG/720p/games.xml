@@ -1,0 +1,751 @@
+<?xml version="1.0"?>
+<window type="window" id="14001">
+   <defaultcontrol always="true">202</defaultcontrol>
+   <allowoverlay>no</allowoverlay>
+   <onload>SetFocus(202)</onload>
+   <onload lang="python">
+      <![CDATA[
+
+myTracker.trackView("Games")
+
+if nhl.config.GetValue('222') or nhl.config.GetValue('225'):
+   nhl.browser.buildGuiCalendar()
+
+nhl.updateGameView()
+
+if nhl.config.GetValue('firstLaunch') == 'true':
+   nhl.config.SetValue('firstLaunch', 'false')
+   nhl.dialog.show('NHL GAMECENTER', 'Since this is the first time you\'ve launched NHL GAMECENTER we\'ve taken the liberty to hide scores by default.[CR][CR]If you\'d rather see game scores you can change this in the settings panel located at the top right of your screen.')
+
+]]>
+</onload>
+   <controls>
+      <include>Window_Fade_Animation</include>
+      <control type="image">
+         <width>1280</width>
+         <height>720</height>
+         <texture>NHL_DefaultBG.png</texture>
+         <aspectratio>scale</aspectratio>
+      </control>
+      <control type="image">
+         <posx>423</posx>
+         <posy>114</posy>
+         <width>434</width>
+         <height>492</height>
+         <texture>NHL_DefaultBGLogo.png</texture>
+         <aspectratio>keep</aspectratio>
+      </control>
+      <control type="image">
+         <width>1280</width>
+         <height>720</height>
+         <texture>NHL_ScreenDim2.png</texture>
+      </control>
+      <control type="image">
+         <width>1280</width>
+         <height>120</height>
+         <texture>NHL_Banner.png</texture>
+      </control>
+      <control type="image">
+         <width>176</width>
+         <height>95</height>
+         <texture>NHL_LogoBanner.png</texture>
+         <aspectratio>keep</aspectratio>
+      </control>
+      <control type="label">
+         <posx>1230</posx>
+         <posy>7</posy>
+         <width>600</width>
+         <height>30</height>
+         <align>right</align>
+         <aligny>center</aligny>
+         <font>font30</font>
+         <textcolor>white</textcolor>
+         <label>Welcome $INFO[App.String(auth_name)]!</label>
+         <visible>!IsEmpty(App.String(auth_name))</visible>
+      </control>
+      <control type="group" id="100">
+         <control type="button" id="101">
+            <onright>102</onright>
+            <posy>5</posy>
+            <posx>392</posx>
+            <width>496</width>
+            <height>35</height>
+            <ondown>200</ondown>
+            <texturefocus>NHL_NowPlayingOn.png</texturefocus>
+            <texturenofocus>NHL_NowPlayingOff.png</texturenofocus>
+            <visible>Player.HasVideo</visible>
+            <onclick>SetFocus(101)</onclick>
+            <onclick>ActivateWindow(FullscreenVideo)</onclick>
+         </control>
+         <control type="button" id="102">
+            <onleft>101</onleft>
+            <posy>12</posy>
+            <posx>1246</posx>
+            <width>25</width>
+            <height>25</height>
+            <ondown>200</ondown>
+            <texturefocus>NHL_SettingsOn.png</texturefocus>
+            <texturenofocus>NHL_SettingsOff.png</texturenofocus>
+            <onclick>ActivateWindow(14004)</onclick>
+         </control>
+      </control>
+      <control type="group">
+         <posy>4</posy>
+         <posx>435</posx>
+         <control type="label">
+            <width>440</width>
+            <height>35</height>
+            <font>font23</font>
+            <align>left</align>
+            <aligny>center</aligny>
+            <scroll>true</scroll>
+            <textcolor>white</textcolor>
+            <label>Now Playing: $INFO[VideoPlayer.Title]</label>
+            <visible>Player.HasVideo + !Control.HasFocus(101)</visible>
+         </control>
+         <control type="label">
+            <width>440</width>
+            <height>35</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <font>font23</font>
+            <textcolor>black</textcolor>
+            <label>Now Playing: $INFO[VideoPlayer.Title]</label>
+            <scroll>true</scroll>
+            <visible>Player.HasVideo + Control.HasFocus(101)</visible>
+         </control>
+      </control>
+
+      <!--
+         NHL NEWS SECTION
+      -->
+      <control type="group">
+         <posy>46</posy>
+         <posx>850</posx>
+         <control type="grouplist" id="200">
+            <onup>100</onup>
+            <ondown>220</ondown>
+            <itemgap>13</itemgap>
+            <orientation>horizontal</orientation>
+            <control type="button" id="201">
+               <width>98</width>
+               <height>49</height>
+               <texturefocus>NHL_NewsOn.png</texturefocus>
+               <texturenofocus>NHL_NewsOff.png</texturenofocus>
+               <onclick>ActivateWindow(14000)</onclick>
+            </control>
+            <control type="button" id="202">
+               <width>114</width>
+               <height>49</height>
+               <texturefocus>NHL_GamesOn.png</texturefocus>
+               <texturenofocus>NHL_GamesOnAlt.png</texturenofocus>
+            </control>
+            <!--<control type="button" id="203">-->
+            <!--   <width>170</width>-->
+            <!--   <height>52</height>-->
+            <!--   <texturefocus>NHL_ScheduleOn.png</texturefocus>-->
+            <!--   <texturenofocus>NHL_ScheduleOff.png</texturenofocus>-->
+            <!--   <onclick>ActivateWindow(14002)</onclick>-->
+            <!--</control>-->
+            <control type="button" id="204">
+               <width>184</width>
+               <height>49</height>
+               <texturefocus>NHL_StandingsOn.png</texturefocus>
+               <texturenofocus>NHL_StandingsOff.png</texturenofocus>
+               <onclick>ActivateWindow(14003)</onclick>
+            </control>
+         </control>
+         <control type="group">
+            <posx>150</posx>
+            <posy>49</posy>
+            <control type="image">
+               <width>505</width>
+               <height>35</height>
+               <texture>NHL_GamesDropdownBG.png</texture>
+            </control>
+            <control type="grouplist" id="220">
+               <posy>2</posy>
+               <posx>10</posx>
+               <onup>200</onup>
+               <ondown>2000</ondown>
+               <itemgap>13</itemgap>
+               <orientation>horizontal</orientation>
+               <control type="togglebutton" id="221">
+                  <width>43</width>
+                  <height>35</height>
+                  <texturefocus>NHL_LiveOn.png</texturefocus>
+                  <texturenofocus>NHL_LiveOff.png</texturenofocus>
+                  <alttexturefocus>NHL_LiveOn.png</alttexturefocus>
+                  <alttexturenofocus>NHL_LiveOnAlt.png</alttexturenofocus>
+                  <usealttexture>App.HasSetting(221)</usealttexture>
+                  <onclick lang="python">
+<![CDATA[
+
+myTracker.trackEvent("Button", "Click", "Live")
+nhl.setGamesSubCategory(221)
+
+]]>
+                  </onclick>
+               </control>
+<!--               <control type="togglebutton" id="222">-->
+<!--                  <width>111</width>-->
+<!--                  <height>35</height>-->
+<!--                  <texturefocus>NHL_CondensedOn.png</texturefocus>-->
+<!--                  <texturenofocus>NHL_CondensedOff.png</texturenofocus>-->
+<!--                  <alttexturefocus>NHL_CondensedOn.png</alttexturefocus>-->
+<!--                  <alttexturenofocus>NHL_CondensedOnAlt.png</alttexturenofocus>-->
+<!--                  <usealttexture>App.HasSetting(222)</usealttexture>-->
+<!--                  <onclick lang="python">-->
+<!--<![CDATA[-->
+<!---->
+<!--nhl.setGamesSubCategory(222)-->
+<!---->
+<!--]]>-->
+<!--                  </onclick>-->
+<!--               </control>-->
+               <control type="togglebutton" id="223">
+                  <width>110</width>
+                  <height>35</height>
+                  <texturefocus>NHL_HighlightsOn.png</texturefocus>
+                  <texturenofocus>NHL_HighlightsOff.png</texturenofocus>
+                  <alttexturefocus>NHL_HighlightsOn.png</alttexturefocus>
+                  <alttexturenofocus>NHL_HighlightsOnAlt.png</alttexturenofocus>
+                  <usealttexture>App.HasSetting(223)</usealttexture>
+                  <onclick lang="python">
+<![CDATA[
+
+myTracker.trackEvent("Button", "Click", "Highlights")
+nhl.setGamesSubCategory(223)
+
+]]>
+                  </onclick>
+               </control>
+               <control type="togglebutton" id="225">
+                  <width>80</width>
+                  <height>35</height>
+                  <texturefocus>NHL_ArchiveOn.png</texturefocus>
+                  <texturenofocus>NHL_ArchiveOff.png</texturenofocus>
+                  <alttexturefocus>NHL_ArchiveOn.png</alttexturefocus>
+                  <alttexturenofocus>NHL_ArchiveOnAlt.png</alttexturenofocus>
+                  <usealttexture>App.HasSetting(225)</usealttexture>
+                  <onclick lang="python">
+<![CDATA[
+
+myTracker.trackEvent("Button", "Click", "Archive")
+nhl.setGamesSubCategory(225)
+
+]]>
+                  </onclick>
+               </control>
+            </control>
+         </control>
+      </control>
+
+      <!--
+         Game List Filters
+      -->
+
+      <control type="grouplist" id="1000">
+         <posy>148</posy>
+         <posx>15</posx>
+         <onup>220</onup>
+         <onright>2000</onright>
+         <itemgap>10</itemgap>
+         <orientation>vertical</orientation>
+         <control type="button" id="1001">
+            <width>247</width>
+            <height>41</height>
+            <label>All Teams</label>
+            <font>font21</font>
+            <align>left</align>
+            <aligny>top</aligny>
+            <textcolor>black</textcolor>
+            <textoffsety>3</textoffsety>
+            <textoffsetx>10</textoffsetx>
+            <texturefocus>NHL_MenuOn.png</texturefocus>
+            <texturenofocus>NHL_MenuOff.png</texturenofocus>
+            <onclick>ActivateWindow(14051)</onclick>
+            <visible>!App.HasSetting(224) + !App.HasSetting(221) + !App.HasSetting(223)</visible>
+         </control>
+         <control type="button" id="1002">
+            <width>247</width>
+            <height>41</height>
+            <label>$INFO[App.String(games_season)]</label>
+            <font>font21</font>
+            <align>left</align>
+            <aligny>top</aligny>
+            <ondown>SetFocus(1003)</ondown>
+            <textcolor>black</textcolor>
+            <textoffsety>3</textoffsety>
+            <textoffsetx>10</textoffsetx>
+            <texturefocus>NHL_MenuOn.png</texturefocus>
+            <texturenofocus>NHL_MenuOff.png</texturenofocus>
+            <onclick>ActivateWindow(14052)</onclick>
+            <visible>!App.HasSetting(224) + !App.HasSetting(221) + !App.HasSetting(223)</visible>
+         </control>
+         <control type="group">
+            <width>249</width>
+            <height>273</height>
+            <control type="image">
+               <width>249</width>
+               <height>273</height>
+               <texture>NHL_CalendarOff.png</texture>
+            </control>
+            <control type="button" id="1003">
+               <posx>27</posx>
+               <posy>4</posy>
+               <onup>1002</onup>
+               <ondown>1004</ondown>
+               <width>187</width>
+               <height>30</height>
+               <align>center</align>
+               <aligny>center</aligny>
+               <font>font21</font>
+               <textcolor>black</textcolor>
+               <focusedcolor>FF13C3D7</focusedcolor>
+               <texturenofocus>white.png</texturenofocus>
+               <texturefocus>white.png</texturefocus>
+               <label></label>
+               <onleft lang="python">
+<![CDATA[
+if nhl.browser.monthPrevious():
+   nhl.browser.updateBrowserView()
+]]>
+               </onleft>
+               <onright lang="python">
+<![CDATA[
+if nhl.browser.monthNext():
+   nhl.browser.updateBrowserView()
+]]>
+               </onright>
+            </control>
+            <control type="panel" id="1004">
+               <posx>10</posx>
+               <posy>44</posy>
+               <onup>1003</onup>
+               <width>245</width>
+               <height>230</height>
+               <pagecontrol></pagecontrol>
+               <scrolltime>200</scrolltime>
+               <preloaditems>2</preloaditems>
+               <orientation>vertical</orientation>
+               <onleft>-</onleft>
+               <ondown>-</ondown>
+               <onright>2000</onright>
+               <itemlayout width="32" height="37">
+                  <control type="label">
+                     <posx>16</posx>
+                     <posy>-1</posy>
+                     <width>32</width>
+                     <height>32</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font20</font>
+                     <textcolor>FF13C3D7</textcolor>
+                     <info>Listitem.Label</info>
+                     <visible>!IsEmpty(Listitem.Property(custom:active))</visible>
+                  </control>
+                  <control type="label">
+                     <posx>16</posx>
+                     <posy>-1</posy>
+                     <width>32</width>
+                     <height>32</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font20</font>
+                     <textcolor>33000000</textcolor>
+                     <info>Listitem.Label</info>
+                     <visible>!IsEmpty(Listitem.Property(custom:nogames))</visible>
+                  </control>
+                  <control type="label">
+                     <posx>16</posx>
+                     <posy>-1</posy>
+                     <width>32</width>
+                     <height>32</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>font20</font>
+                     <textcolor>black</textcolor>
+                     <info>Listitem.Label</info>
+                     <visible>IsEmpty(Listitem.Property(custom:active)) + IsEmpty(Listitem.Property(custom:nogames))</visible>
+                  </control>
+               </itemlayout>
+               <focusedlayout width="35" height="37">
+                  <control type="group">
+                     <!--<visible>Control.HasFocus(2000)</visible>-->
+                     <control type="image">
+                        <width>32</width>
+                        <height>32</height>
+                        <texture>NHL_CalendarDateFocus.png</texture>
+                     </control>
+                     <control type="label">
+                        <posx>16</posx>
+                        <posy>-1</posy>
+                        <width>32</width>
+                        <height>32</height>
+                        <align>center</align>
+                        <aligny>center</aligny>
+                        <font>font20</font>
+                        <textcolor>white</textcolor>
+                        <info>Listitem.Label</info>
+                     </control>
+                  </control>
+               </focusedlayout>
+               <content type="action">
+                  <onclick lang="python">
+<![CDATA[
+list = mc.GetActiveWindow().GetList(1004)
+focused = list.GetFocusedItem()
+nhl.browser.active_cal['day'] = int(list.GetItem(focused).GetLabel())
+myTracker.trackEvent("Button", "Click", nhl.browser.getRequestDate())
+nhl.browser.updateBrowserView()
+list.SetFocusedItem(focused)
+nhl.updateGameView()
+]]>
+                  </onclick>
+               </content>
+            </control>
+            <visible>!App.HasSetting(224) + !App.HasSetting(221) + !App.HasSetting(223)</visible>
+         </control>
+         <control type="label">
+            <width>247</width>
+            <height>432</height>
+            <font>title20b</font>
+            <textcolor>ffffffff</textcolor>
+            <shadowcolor>ff000000</shadowcolor>
+            <label>Blackout Restrictions:[CR]Similar to television, online games are subject to local blackouts and other restrictions. Please check local listings. If all your games are blacked out or you feel like you are being blacked out incorrectly please contact NHL GAMECENTER customer support.</label>
+            <wrapmultiline>true</wrapmultiline>
+            <visible>App.HasSetting(221)</visible>
+         </control>
+         <control type="label">
+            <width>247</width>
+            <height>232</height>
+            <align>center</align>
+            <font>title20b</font>
+            <textcolor>ffffffff</textcolor>
+            <shadowcolor>ff000000</shadowcolor>
+            <label>FILTERING NOT AVAILABLE FOR THE SELECTED GAMES CATEGORY</label>
+            <wrapmultiline>true</wrapmultiline>
+            <visible>App.HasSetting(224) | App.HasSetting(223)</visible>
+         </control>
+      </control>
+
+
+      <!--
+         Game List
+      -->
+
+      <control type="group">
+         <posx>272</posx>
+         <posy>148</posy>
+         <control type="label" id="1234">
+            <posy>110</posy>
+            <posx>75</posx>
+            <visible>false</visible>
+            <width>600</width>
+            <height>232</height>
+            <align>center</align>
+            <aligny>center</aligny>
+            <font>font34b</font>
+            <textcolor>ffffffff</textcolor>
+            <shadowcolor>ff000000</shadowcolor>
+            <label>THERE ARE CURRENTLY NO[CR]GAMES AVAILABLE FOR THIS DATE</label>
+            <wrapmultiline>true</wrapmultiline>
+            <!--<visible>Container(2000).IsEmpty | Container(2000).IsLoading</visible>-->
+            <!--<animation effect='fade' start='0' end='100' time='400'>VisibleChange</animation>-->
+         </control>
+         <control type="image">
+            <width>1000</width>
+            <height>523</height>
+            <texture>NHL_GamesSearchResultsWindow.png</texture>
+            <visible>!Container(2000).IsEmpty</visible>
+         </control>
+         <control type="list" id="2000">
+            <posy>39</posy>
+            <width>993</width>
+            <height>474</height>
+            <onup>220</onup>
+            <onright>220</onright>
+            <onleft>1000</onleft>
+            <ondown>1000</ondown>
+            <pagecontrol></pagecontrol>
+            <scrolltime>200</scrolltime>
+            <preloaditems>2</preloaditems>
+            <orientation>vertical</orientation>
+            <visible>!Container(2000).IsEmpty</visible>
+            <itemlayout width="993" height="94">
+               <control type="label">
+                  <posx>28</posx>
+                  <posy>25</posy>
+                  <width>250</width>
+                  <height>30</height>
+                  <align>left</align>
+                  <aligny>center</aligny>
+                  <font>title18b</font>
+                  <textcolor>AA000000</textcolor>
+                  <info>Listitem.property(custom:date)</info>
+               </control>
+               <control type="label">
+                  <posx>370</posx>
+                  <posy>25</posy>
+                  <width>350</width>
+                  <height>30</height>
+                  <align>right</align>
+                  <aligny>center</aligny>
+                  <font>title22b</font>
+                  <textcolor>FF000000</textcolor>
+                  <info>Listitem.property(custom:awayCity)</info>
+               </control>
+               <control type="image">
+                  <posx>390</posx>
+                  <posy>14</posy>
+                  <width>50</width>
+                  <height>50</height>
+                  <texture>TeamLogos/NHL_$INFO[Listitem.property(custom:awayName)].png</texture>
+                  <aspectratio align="right" aligny="center">keep</aspectratio>
+               </control>
+               <control type="group">
+                  <visible>!App.HasSetting(hidescores)</visible>
+                  <control type="label">
+                     <posx>469</posx>
+                     <posy>25</posy>
+                     <width>40</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>title22b</font>
+                     <textcolor>FF000000</textcolor>
+                     <info>Listitem.property(custom:awayGoals)</info>
+                  </control>
+                  <control type="label">
+                     <posx>469</posx>
+                     <posy>25</posy>
+                     <width>40</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>title22b</font>
+                     <textcolor>FF000000</textcolor>
+                     <label>12310</label>
+                     <visible>IsEmpty(Listitem.property(custom:awayGoals))</visible>
+                  </control>
+                  <control type="label">
+                     <posx>522</posx>
+                     <posy>25</posy>
+                     <width>40</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>title22b</font>
+                     <textcolor>FF000000</textcolor>
+                     <label>12310</label>
+                     <visible>IsEmpty(Listitem.property(custom:homeGoals))</visible>
+                  </control>
+                  <control type="label">
+                     <posx>522</posx>
+                     <posy>25</posy>
+                     <width>40</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>title22b</font>
+                     <textcolor>FF000000</textcolor>
+                     <info>Listitem.property(custom:homeGoals)</info>
+                  </control>
+               </control>
+               <control type="image">
+                  <posx>550</posx>
+                  <posy>14</posy>
+                  <width>50</width>
+                  <height>50</height>
+                  <texture>TeamLogos/NHL_$INFO[Listitem.property(custom:homeName)].png</texture>
+                  <aspectratio align="left" aligny="center">keep</aspectratio>
+               </control>
+               <control type="label">
+                  <posx>618</posx>
+                  <posy>25</posy>
+                  <width>350</width>
+                  <height>30</height>
+                  <align>left</align>
+                  <aligny>center</aligny>
+                  <font>title22b</font>
+                  <textcolor>FF000000</textcolor>
+                  <info>Listitem.property(custom:homeCity)</info>
+               </control>
+               <control type="label">
+                  <posx>970</posx>
+                  <posy>25</posy>
+                  <width>250</width>
+                  <height>30</height>
+                  <align>right</align>
+                  <aligny>center</aligny>
+                  <font>title18b</font>
+                  <textcolor>AA000000</textcolor>
+                  <info>Listitem.property(custom:result)</info>
+                  <visible>[!IsEmpty(Listitem.property(custom:okToShowResult)) + App.HasSetting(hidescores)] | !App.HasSetting(hidescores)</visible>
+               </control>
+               <control type="image">
+                  <posx>860</posx>
+                  <posy>8</posy>
+                  <width>112</width>
+                  <height>63</height>
+                  <info>Listitem.Thumb</info>
+                  <aspectratio>scale</aspectratio>
+                  <visible>App.HasSetting(224)</visible>
+               </control>
+            </itemlayout>
+            <focusedlayout width="993" height="94">
+               <control type="image">
+                  <width>990</width>
+                  <height>79</height>
+                  <texture>NHL_GamesListSelected.png</texture>
+                  <visible>Control.HasFocus(2000)</visible>
+               </control>
+               <control type="label">
+                  <posx>28</posx>
+                  <posy>25</posy>
+                  <width>250</width>
+                  <height>30</height>
+                  <align>left</align>
+                  <aligny>center</aligny>
+                  <font>title18b</font>
+                  <textcolor>AA000000</textcolor>
+                  <info>Listitem.property(custom:date)</info>
+               </control>
+               <control type="label">
+                  <posx>370</posx>
+                  <posy>25</posy>
+                  <width>350</width>
+                  <height>30</height>
+                  <align>right</align>
+                  <aligny>center</aligny>
+                  <font>title22b</font>
+                  <textcolor>FF000000</textcolor>
+                  <info>Listitem.property(custom:awayCity)</info>
+               </control>
+               <control type="image">
+                  <posx>390</posx>
+                  <posy>14</posy>
+                  <width>50</width>
+                  <height>50</height>
+                  <texture>TeamLogos/NHL_$INFO[Listitem.property(custom:awayName)].png</texture>
+                  <aspectratio align="right" aligny="center">keep</aspectratio>
+               </control>
+               <control type="group">
+                  <visible>!App.HasSetting(hidescores)</visible>
+                  <control type="label">
+                     <posx>469</posx>
+                     <posy>25</posy>
+                     <width>40</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>title22b</font>
+                     <textcolor>FF000000</textcolor>
+                     <info>Listitem.property(custom:awayGoals)</info>
+                  </control>
+                  <control type="label">
+                     <posx>469</posx>
+                     <posy>25</posy>
+                     <width>40</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>title22b</font>
+                     <textcolor>FF000000</textcolor>
+                     <label>12310</label>
+                     <visible>IsEmpty(Listitem.property(custom:awayGoals))</visible>
+                  </control>
+                  <control type="label">
+                     <posx>522</posx>
+                     <posy>25</posy>
+                     <width>40</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>title22b</font>
+                     <textcolor>FF000000</textcolor>
+                     <label>12310</label>
+                     <visible>IsEmpty(Listitem.property(custom:homeGoals))</visible>
+                  </control>
+                  <control type="label">
+                     <posx>522</posx>
+                     <posy>25</posy>
+                     <width>40</width>
+                     <height>30</height>
+                     <align>center</align>
+                     <aligny>center</aligny>
+                     <font>title22b</font>
+                     <textcolor>FF000000</textcolor>
+                     <info>Listitem.property(custom:homeGoals)</info>
+                  </control>
+               </control>
+               <control type="image">
+                  <posx>550</posx>
+                  <posy>14</posy>
+                  <width>50</width>
+                  <height>50</height>
+                  <texture>TeamLogos/NHL_$INFO[Listitem.property(custom:homeName)].png</texture>
+                  <aspectratio align="left" aligny="center">keep</aspectratio>
+               </control>
+               <control type="label">
+                  <posx>618</posx>
+                  <posy>25</posy>
+                  <width>350</width>
+                  <height>30</height>
+                  <align>left</align>
+                  <aligny>center</aligny>
+                  <font>title22b</font>
+                  <textcolor>FF000000</textcolor>
+                  <info>Listitem.property(custom:homeCity)</info>
+               </control>
+               <control type="label">
+                  <posx>970</posx>
+                  <posy>25</posy>
+                  <width>250</width>
+                  <height>30</height>
+                  <align>right</align>
+                  <aligny>center</aligny>
+                  <font>title18b</font>
+                  <textcolor>AA000000</textcolor>
+                  <info>Listitem.property(custom:result)</info>
+                  <visible>[!IsEmpty(Listitem.property(custom:okToShowResult)) + App.HasSetting(hidescores)] | !App.HasSetting(hidescores)</visible>
+               </control>
+               <control type="image">
+                  <posx>860</posx>
+                  <posy>8</posy>
+                  <width>112</width>
+                  <height>63</height>
+                  <info>Listitem.Thumb</info>
+                  <aspectratio>scale</aspectratio>
+                  <visible>App.HasSetting(224)</visible>
+               </control>
+            </focusedlayout>
+            <content type="action">
+               <onclick lang="python">
+<![CDATA[
+list = mc.GetActiveWindow().GetList(2000)
+item = list.GetItem(list.GetFocusedItem())
+myTracker.trackEvent("Video", "Play", item.GetLabel())
+if not item.GetPath(): nhl.play(item)
+else: mc.GetPlayer().Play(item)
+]]>
+               </onclick>
+            </content>
+         </control>
+      </control>
+
+      <control type="label">
+         <posy>680</posy>
+         <posx>190</posx>
+         <width>890</width>
+         <height>40</height>
+         <align>center</align>
+         <aligny>center</aligny>
+         <font>font14</font>
+         <textcolor>99000000</textcolor>
+         <wrapmultiline>true</wrapmultiline>
+         <label>All NHL logos and marks and NHL team logos and marks depicted herein are the property of the NHL and the respective teams and may not be reproduced without the prior written consent of NHL Enterprises, L.P. &#169; NHL 2010. All Rights Reserved.</label>
+      </control>
+   </controls>
+</window>
